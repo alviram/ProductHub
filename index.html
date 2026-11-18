@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ProductHub | Product Management</title>
+
+    <!-- CSS File -->
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+    <!-- Main Application -->
+    <div class="app-container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="brand">
+                <h2>Product<span>Hub</span></h2>
+            </div>
+
+            <nav class="sidebar-nav">
+                <p class="nav-heading">MENU</p>
+
+                <a href="#" class="nav-link active">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="#products-section" class="nav-link">
+                    <span>▤</span> Products
+                </a>
+
+                <a href="#cart-section" class="nav-link">
+                    <span>🛒</span> Shopping Cart
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>ProductHub v1.0</p>
+                <small>Product Management System</small>
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Header -->
+            <header class="top-header">
+
+                <div class="header-title">
+                    <h1>Dashboard</h1>
+                    <p>Manage your products and inventory.</p>
+                </div>
+
+                <button class="cart-button" id="open-cart-btn">
+                    🛒 Cart
+                    <span id="cart-count">0</span>
+                </button>
+
+            </header>
+
+
+            <!-- Dashboard Statistics -->
+            <section class="stats-grid">
+
+                <div class="stat-card">
+                    <p>Total Products</p>
+                    <h2 id="total-products">0</h2>
+                    <span>Products available</span>
+                </div>
+
+                <div class="stat-card">
+                    <p>Categories</p>
+                    <h2 id="total-categories">0</h2>
+                    <span>Product categories</span>
+                </div>
+
+                <div class="stat-card">
+                    <p>Cart Items</p>
+                    <h2 id="total-cart-items">0</h2>
+                    <span>Items in your cart</span>
+                </div>
+
+                <div class="stat-card">
+                    <p>Cart Total</p>
+                    <h2 id="cart-total">₹0.00</h2>
+                    <span>Current cart value</span>
+                </div>
+
+            </section>
+
+
+            <!-- Products Section -->
+            <section class="products-section" id="products-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>All Products</h2>
+                        <p>Explore and manage your inventory.</p>
+                    </div>
+
+                    <button class="primary-button" id="add-product-btn">
+                        + Add Product
+                    </button>
+
+                </div>
+
+
+                <!-- Search and Filters -->
+                <div class="toolbar">
+
+                    <div class="search-box">
+                        <span>⌕</span>
+
+                        <input
+                            type="search"
+                            id="search-input"
+                            placeholder="Search products..."
+                            aria-label="Search products"
+                        >
+                    </div>
+
+                    <select id="category-filter" aria-label="Filter by category">
+                        <option value="all">All Categories</option>
+                    </select>
+
+                    <select id="sort-select" aria-label="Sort products">
+                        <option value="default">Sort By</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="name-asc">Name: A to Z</option>
+                        <option value="name-desc">Name: Z to A</option>
+                    </select>
+
+                </div>
+
+
+                <!-- Loading and Error Messages -->
+                <p id="loading-message" class="status-message">
+                    Loading products...
+                </p>
+
+                <p id="error-message" class="error-message" hidden></p>
+
+
+                <!-- Product Cards -->
+                <div class="product-grid" id="product-grid">
+
+                    <!-- JavaScript will insert product cards here -->
+
+                </div>
+
+                <p id="empty-message" class="empty-message" hidden>
+                    No products found.
+                </p>
+
+            </section>
+
+
+            <!-- Shopping Cart Section -->
+            <section class="cart-section" id="cart-section">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Shopping Cart</h2>
+                        <p>Review your selected products.</p>
+                    </div>
+                </div>
+
+                <div id="cart-items" class="cart-items">
+                    <p class="empty-message">Your cart is empty.</p>
+                </div>
+
+                <div class="cart-summary">
+                    <h3>Cart Summary</h3>
+
+                    <div class="summary-row">
+                        <span>Total Items</span>
+                        <strong id="summary-quantity">0</strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <strong id="summary-subtotal">₹0.00</strong>
+                    </div>
+
+                    <div class="summary-row grand-total">
+                        <span>Grand Total</span>
+                        <strong id="summary-total">₹0.00</strong>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- Product Form Modal -->
+    <div class="modal-overlay" id="product-modal" hidden>
+
+        <div class="modal">
+
+            <div class="modal-header">
+                <h2 id="modal-title">Add New Product</h2>
+
+                <button type="button" class="close-button" id="close-modal-btn"
+                    aria-label="Close form">
+                    &times;
+                </button>
+            </div>
+
+            <form id="product-form">
+
+                <input type="hidden" id="product-id">
+
+                <label for="product-title">Product Name</label>
+                <input
+                    type="text"
+                    id="product-title"
+                    placeholder="Enter product name"
+                    required
+                    maxlength="100"
+                >
+
+                <label for="product-price">Price (₹)</label>
+                <input
+                    type="number"
+                    id="product-price"
+                    placeholder="Enter price"
+                    min="0.01"
+                    step="0.01"
+                    required
+                >
+
+                <label for="product-category">Category</label>
+                <input
+                    type="text"
+                    id="product-category"
+                    placeholder="Enter category"
+                    required
+                >
+
+                <label for="product-description">Description</label>
+                <textarea
+                    id="product-description"
+                    placeholder="Enter product description"
+                    rows="4"
+                ></textarea>
+
+<!-- Product Image Upload -->
+<label for="product-image">Product Image</label>
+
+<input
+    type="file"
+    id="product-image"
+    accept="image/png, image/jpeg, image/webp"
+>
+
+<small class="upload-hint">
+    Upload JPG, PNG or WEBP image (Maximum 2 MB).
+</small>
+
+<!-- Image Preview -->
+<div id="image-preview-container" hidden>
+    <img
+        id="image-preview"
+        src=""
+        alt="Product Image Preview"
+    >
+</div>
+
+                <div class="modal-actions">
+                    <button type="button" class="secondary-button"
+                        id="cancel-modal-btn">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="primary-button">
+                        Save Product
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript Entry Point -->
+    <script type="module" src="./js/main.js"></script>
+
+</body>
+</html>
